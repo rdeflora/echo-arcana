@@ -1,18 +1,11 @@
-import './globals.css';
-import type { Metadata } from 'next';
-import Navbar from '../components/Navbar';
-
-export const metadata: Metadata = {
-  title: 'Echo Arcana',
-};
-
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <html lang="en" className="bg-zinc-900 text-zinc-100">
-      <body>
-        <Navbar />
-        <main className="max-w-5xl mx-auto p-4">{children}</main>
-      </body>
-    </html>
-  );
-}
+<div className="flex gap-4 text-sm">
+  <a href="/map">Map</a>
+  <a href="/color-hall">Color Hall</a>
+  <a href="/games">Games</a>
+  <a href="/shop">Shop</a>
+  <a href="/lore">Lore</a>
+  <a href="/news">News</a>
+  <a href="/about">About</a>
+  <a href="/contact">Contact</a>
+  <a href="/upload-art">Upload</a>
+</div>
