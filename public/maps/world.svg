@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#0b0f14"/>
+      <stop offset="100%" stop-color="#0f1720"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="800" fill="url(#bg)"/>
+
+  <g opacity="0.08" stroke="#ffffff">
+    <path d="M100 0v800 M200 0v800 M300 0v800 M400 0v800 M500 0v800 M600 0v800 M700 0v800 M800 0v800 M900 0v800 M1000 0v800 M1100 0v800"/>
+    <path d="M0 100h1200 M0 200h1200 M0 300h1200 M0 400h1200 M0 500h1200 M0 600h1200 M0 700h1200"/>
+  </g>
+
+  <path
+    d="M200,420 C260,260 520,220 700,280 C820,320 980,420 920,540 C840,700 480,720 320,600 C240,540 160,520 200,420Z"
+    fill="#1f3347"
+    stroke="#2f4f6b"
+    stroke-width="4"
+    opacity="0.85"
+  />
+
+  <text x="40" y="60" fill="#9cc5ff" font-size="36" font-family="serif">
+    Echo Realms (placeholder)
+  </text>
+</svg>
+

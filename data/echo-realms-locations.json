@@ -1,0 +1,5 @@
+[
+  { "name": "Sea of Sword Coast", "lat": 45.0, "lng": -20.0, "desc": "Windswept coast of legends." },
+  { "name": "Maple Fen", "lat": 43.3, "lng": -77.7, "desc": "Where the mist never sleeps." },
+  { "name": "Vault of Nikodemous", "lat": 44.2, "lng": -19.6, "desc": "A forgotten fortress beneath the waves." }
+]
