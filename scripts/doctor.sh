@@ -14,7 +14,7 @@ npm run -s lint || true
 echo
 
 echo "— Next build (no lint) —"
-npx -y next build --no-lint || true
+npx -y next build || true
 echo
 
 echo "— Service 'echo-arcana' —"
