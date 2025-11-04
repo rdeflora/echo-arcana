@@ -1,5 +1,3 @@
-import FeaturesSection from "../_components/features";
-
 export default function Page() {
   return (
     <main className="mx-auto max-w-6xl p-6 space-y-10">
@@ -15,7 +13,6 @@ export default function Page() {
           <a href="/color-hall" className="rounded-xl px-5 py-3 border shadow">Visit Color Hall</a>
         </div>
       </section>
-      <FeaturesSection />
     </main>
   );
 }
