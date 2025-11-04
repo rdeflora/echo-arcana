@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic";  // force fresh folder reads
+export const dynamic = "force-dynamic";
 
 import { NextResponse } from "next/server";
 import path from "path";
@@ -16,8 +16,12 @@ export async function GET() {
       }))
       .sort((a, b) => a.name.localeCompare(b.name));
 
-    return NextResponse.json({ ok: true, items }, { headers: { "Cache-Control": "no-store" } });
-  } catch (err: any) {
-    return NextResponse.json({ ok: false, error: err.message }, { status: 500 });
+    return NextResponse.json(
+      { ok: true, items },
+      { headers: { "Cache-Control": "no-store" } }
+    );
+  } catch (err: unknown) {
+    const msg = err instanceof Error ? err.message : String(err);
+    return NextResponse.json({ ok: false, error: msg }, { status: 500 });
   }
 }

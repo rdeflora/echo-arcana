@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { Suspense } from "react";
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "next/navigation";
@@ -7,9 +8,12 @@ import { PINS, MapPin } from "./pins";
 
 function pinColor(type: MapPin["type"]) {
   switch (type) {
-    case "city": return "bg-emerald-500 ring-2 ring-white/80";
-    case "dungeon": return "bg-red-500 ring-2 ring-white/80";
-    default: return "bg-sky-400 ring-2 ring-white/80";
+    case "city":
+      return "bg-emerald-500 ring-2 ring-white/80";
+    case "dungeon":
+      return "bg-red-500 ring-2 ring-white/80";
+    default:
+      return "bg-sky-400 ring-2 ring-white/80";
   }
 }
 
@@ -21,13 +25,13 @@ function Inner() {
   const [scale, setScale] = useState(1);
   const [tx, setTx] = useState(0);
   const [ty, setTy] = useState(0);
-  const drag = useRef<{dx:number,dy:number,startX:number,startY:number}|null>(null);
-  const layerRef = useRef<HTMLDivElement|null>(null);
+  const drag = useRef<{ dx: number; dy: number; startX: number; startY: number } | null>(null);
+  const layerRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const id = search.get("focus");
     if (!id) return;
-    const p = PINS.find(x => x.id === id);
+    const p = PINS.find((x) => x.id === id);
     if (p) setActive(p);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -47,24 +51,36 @@ function Inner() {
     setTx(dx + (e.clientX - startX));
     setTy(dy + (e.clientY - startY));
   };
-  const onMouseUp = () => { drag.current = null; };
+  const onMouseUp = () => {
+    drag.current = null;
+  };
 
-  const reset = () => { setScale(1); setTx(0); setTy(0); };
+  const reset = () => {
+    setScale(1);
+    setTx(0);
+    setTy(0);
+  };
 
   return (
     <main className="min-h-screen">
       <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <h1 className="text-2xl md:text-3xl font-semibold">Echo Realms — <span className="text-sky-300">Interactive Map</span></h1>
+        <h1 className="text-2xl md:text-3xl font-semibold">
+          Echo Realms — <span className="text-sky-300">Interactive Map</span>
+        </h1>
         <nav className="flex gap-3 text-sm">
-          <a className="btn" href="/">Home</a>
-          <a className="btn" href="/color-hall">Color Hall</a>
+          <Link className="btn" href="/">Home</Link>
+          <Link className="btn" href="/color-hall">Color Hall</Link>
         </nav>
       </div>
 
       <div className="max-w-6xl mx-auto px-4 pb-8">
         <div className="mb-3 flex items-center gap-2 text-sm">
-          <button className="btn" onClick={() => setScale(s => Math.min(3, s + 0.2))}>＋ Zoom</button>
-          <button className="btn" onClick={() => setScale(s => Math.max(1, s - 0.2))}>－ Zoom</button>
+          <button className="btn" onClick={() => setScale((s) => Math.min(3, s + 0.2))}>
+            ＋ Zoom
+          </button>
+          <button className="btn" onClick={() => setScale((s) => Math.max(1, s - 0.2))}>
+            － Zoom
+          </button>
           <button className="btn" onClick={reset}>Reset</button>
         </div>
 
@@ -93,12 +109,17 @@ function Inner() {
           {/* pins */}
           <div
             className="absolute inset-0"
-            style={{ transform: `translate(${tx}px, ${ty}px) scale(${scale})`, transformOrigin: "0 0" }}
+            style={{
+              transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
+              transformOrigin: "0 0",
+            }}
           >
-            {PINS.map(p => (
+            {PINS.map((p) => (
               <button
                 key={p.id}
-                className={`absolute -translate-x-1/2 -translate-y-1/2 h-4 w-4 rounded-full ring-offset-1 ${pinColor(p.type)}`}
+                className={`absolute -translate-x-1/2 -translate-y-1/2 h-4 w-4 rounded-full ring-offset-1 ${pinColor(
+                  p.type
+                )}`}
                 style={{ left: `${p.x}%`, top: `${p.y}%` }}
                 title={p.name}
                 onClick={() => setActive(p)}
@@ -111,7 +132,9 @@ function Inner() {
           <div className="mt-4 card p-4">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-semibold">{active.name}</h2>
-              <a className="btn" href={`/locations/${active.id}`}>Open details →</a>
+              <Link className="btn" href={`/locations/${active.id}`}>
+                Open details →
+              </Link>
             </div>
             {active.desc && <p className="mt-2 text-white/80">{active.desc}</p>}
             <p className="mt-2 text-sm text-white/60">
