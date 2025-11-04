@@ -1,156 +1,67 @@
 "use client";
 
-import Link from "next/link";
-import { Suspense } from "react";
-import { useEffect, useRef, useState } from "react";
-import { useSearchParams } from "next/navigation";
-import { PINS, MapPin } from "./pins";
+import { useState } from "react";
+import { REGIONS, type Region } from "./regions";
 
-function pinColor(type: MapPin["type"]) {
-  switch (type) {
-    case "city":
-      return "bg-emerald-500 ring-2 ring-white/80";
-    case "dungeon":
-      return "bg-red-500 ring-2 ring-white/80";
-    default:
-      return "bg-sky-400 ring-2 ring-white/80";
-  }
-}
+export const metadata = {
+  title: "Echo Realms — Interactive Map",
+  description: "Click locations to reveal lore and links.",
+};
 
-function Inner() {
-  const search = useSearchParams();
-  const [active, setActive] = useState<MapPin | null>(null);
-
-  // zoom/pan
-  const [scale, setScale] = useState(1);
-  const [tx, setTx] = useState(0);
-  const [ty, setTy] = useState(0);
-  const drag = useRef<{ dx: number; dy: number; startX: number; startY: number } | null>(null);
-  const layerRef = useRef<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const id = search.get("focus");
-    if (!id) return;
-    const p = PINS.find((x) => x.id === id);
-    if (p) setActive(p);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const onWheel = (e: React.WheelEvent) => {
-    e.preventDefault();
-    const next = Math.min(3, Math.max(1, scale + (e.deltaY > 0 ? -0.15 : 0.15)));
-    setScale(next);
-  };
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    drag.current = { dx: tx, dy: ty, startX: e.clientX, startY: e.clientY };
-  };
-  const onMouseMove = (e: React.MouseEvent) => {
-    if (!drag.current) return;
-    const { dx, dy, startX, startY } = drag.current;
-    setTx(dx + (e.clientX - startX));
-    setTy(dy + (e.clientY - startY));
-  };
-  const onMouseUp = () => {
-    drag.current = null;
-  };
-
-  const reset = () => {
-    setScale(1);
-    setTx(0);
-    setTy(0);
-  };
+export default function MapPage() {
+  const [hover, setHover] = useState<Region | null>(null);
 
   return (
-    <main className="min-h-screen">
-      <div className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-        <h1 className="text-2xl md:text-3xl font-semibold">
-          Echo Realms — <span className="text-sky-300">Interactive Map</span>
-        </h1>
-        <nav className="flex gap-3 text-sm">
-          <Link className="btn" href="/">Home</Link>
-          <Link className="btn" href="/color-hall">Color Hall</Link>
-        </nav>
-      </div>
+    <main className="mx-auto max-w-6xl p-6">
+      <h1 className="text-3xl font-extrabold tracking-wide mb-4">Echo Realms — Map (v1)</h1>
 
-      <div className="max-w-6xl mx-auto px-4 pb-8">
-        <div className="mb-3 flex items-center gap-2 text-sm">
-          <button className="btn" onClick={() => setScale((s) => Math.min(3, s + 0.2))}>
-            ＋ Zoom
-          </button>
-          <button className="btn" onClick={() => setScale((s) => Math.max(1, s - 0.2))}>
-            － Zoom
-          </button>
-          <button className="btn" onClick={reset}>Reset</button>
-        </div>
+      {/* Map box */}
+      <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-900 to-stone-900">
+        {/* Placeholder terrain grid; replace with textured SVG or image in v2 */}
+        <svg viewBox="0 0 100 100" className="absolute inset-0 h-full w-full">
+          <defs>
+            <pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse">
+              <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" />
+            </pattern>
+          </defs>
+          <rect x="0" y="0" width="100" height="100" fill="url(#grid)" />
+          {/* Decorative bands to imply terrain */}
+          <rect x="0" y="60" width="100" height="40" fill="rgba(30,100,60,0.25)" />
+          <rect x="55" y="0" width="45" height="35" fill="rgba(40,60,110,0.22)" />
+        </svg>
 
-        <div
-          ref={layerRef}
-          className="relative overflow-hidden rounded-2xl border border-white/10 bg-zinc-900"
-          onWheel={onWheel}
-          onMouseDown={onMouseDown}
-          onMouseMove={onMouseMove}
-          onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
-          style={{ height: "70vh" }}
-        >
-          {/* background svg */}
-          <img
-            src="/maps/world.svg"
-            alt="Echo Realms (placeholder)"
-            className="pointer-events-none select-none w-full h-full object-cover"
-            draggable={false}
-            style={{
-              transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
-              transformOrigin: "50% 50%",
-            }}
-          />
-
-          {/* pins */}
-          <div
-            className="absolute inset-0"
-            style={{
-              transform: `translate(${tx}px, ${ty}px) scale(${scale})`,
-              transformOrigin: "0 0",
-            }}
+        {/* Pins */}
+        {REGIONS.map((r) => (
+          <button
+            key={r.id}
+            onMouseEnter={() => setHover(r)}
+            onMouseLeave={() => setHover((h) => (h?.id === r.id ? null : h))}
+            onClick={() => r.href && (window.location.href = r.href)}
+            className="group absolute -translate-x-1/2 -translate-y-1/2"
+            style={{ left: `${r.x}%`, top: `${r.y}%` }}
+            aria-label={r.name}
+            title={r.name}
           >
-            {PINS.map((p) => (
-              <button
-                key={p.id}
-                className={`absolute -translate-x-1/2 -translate-y-1/2 h-4 w-4 rounded-full ring-offset-1 ${pinColor(
-                  p.type
-                )}`}
-                style={{ left: `${p.x}%`, top: `${p.y}%` }}
-                title={p.name}
-                onClick={() => setActive(p)}
-              />
-            ))}
-          </div>
-        </div>
+            <div className="h-4 w-4 rounded-full border border-white/70 bg-emerald-400 shadow group-hover:scale-110 transition" />
+            <div className="mt-1 text-xs opacity-90">{r.name}</div>
+          </button>
+        ))}
 
-        {active && (
-          <div className="mt-4 card p-4">
-            <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold">{active.name}</h2>
-              <Link className="btn" href={`/locations/${active.id}`}>
-                Open details →
-              </Link>
-            </div>
-            {active.desc && <p className="mt-2 text-white/80">{active.desc}</p>}
-            <p className="mt-2 text-sm text-white/60">
-              Coords: {active.x.toFixed(1)}%, {active.y.toFixed(1)}%
-            </p>
+        {/* Hover card */}
+        {hover && (
+          <div
+            className="pointer-events-none absolute left-4 top-4 max-w-sm rounded-xl border border-white/10 bg-black/70 p-3 text-sm"
+            role="status"
+          >
+            <div className="font-semibold">{hover.name}</div>
+            <div className="opacity-80">{hover.blurb ?? "…"}</div>
           </div>
         )}
       </div>
-    </main>
-  );
-}
 
-export default function MapPage() {
-  return (
-    <Suspense fallback={<div className="p-6">Loading map…</div>}>
-      <Inner />
-    </Suspense>
+      <p className="mt-3 text-sm opacity-70">
+        v1: simple pins. v2: textured map + fog-of-war + per-location pages.
+      </p>
+    </main>
   );
 }
