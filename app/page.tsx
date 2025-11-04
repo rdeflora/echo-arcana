@@ -1,11 +1,16 @@
-import Hero from '../components/Hero';
-import Tiles from '../components/Tiles';
+import Hero from "./_components/hero";
+import FeaturesSection from "./_components/features";
 
-export default function HomePage() {
+export const metadata = {
+  title: "Echo Arcana — Where magic gets weird",
+  description: "Maps, lore, goblin wizardry, and community creations.",
+};
+
+export default function Home() {
   return (
-    <>
+    <main className="mx-auto max-w-6xl p-6 space-y-12">
       <Hero />
-      <Tiles />
-    </>
+      <FeaturesSection />
+    </main>
   );
 }
