@@ -1,30 +1,29 @@
+type Vid = { id: string; title: string };
+const latest: Vid[] = [
+  { id: "dQw4w9WgXcQ", title: "GrizzleWhick — Baby Wand Mishap" }, // replace with your IDs
+  { id: "oHg5SJYRHA0", title: "Potion Panic Teaser" },
+  { id: "9bZkp7q19f0", title: "Map Reveal: Hollow Fen" },
+];
+
 export default function Latest() {
-  const cards = [
-    {
-      href: "/lore",
-      title: "Lore & Worldbuilding",
-      desc: "Read fresh entries from the Echo Realms—locations, factions, and whispered secrets.",
-    },
-    {
-      href: "/color-hall",
-      title: "Color Hall — Fan Gallery",
-      desc: "Community art, recolors, and featured creations from goblins to grandmasters.",
-    },
-    {
-      href: "/news",
-      title: "News & Releases",
-      desc: "New maps, drops, and dev logs. Peek behind the curtain (mind the tentacles).",
-    },
-  ];
   return (
-    <section className="py-6">
-      <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Latest</h2>
-      <div className="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {cards.map((c) => (
-          <a key={c.href} href={c.href} className="rounded-xl border p-5 shadow hover:scale-[1.01] transition">
-            <h3 className="text-lg font-semibold">{c.title}</h3>
-            <p className="mt-2 opacity-80">{c.desc}</p>
-          </a>
+    <section className="mt-12">
+      <h2 className="text-xl font-bold mb-3">Latest Spells</h2>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        {latest.map(v => (
+          <div key={v.id} className="rounded-xl border shadow p-3">
+            <div className="aspect-video rounded overflow-hidden">
+              <iframe
+                className="w-full h-full"
+                src={`https://www.youtube.com/embed/${v.id}`}
+                title={v.title}
+                allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+                allowFullScreen
+              />
+            </div>
+            <div className="mt-2 text-sm opacity-90">{v.title}</div>
+          </div>
         ))}
       </div>
     </section>

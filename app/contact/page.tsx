@@ -1,9 +1,15 @@
-export default function ContactPage() {
+export const metadata = { title: "Join the Goblin Council" };
+
+export default function Contact() {
   return (
-    <main className="max-w-5xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4">Contact</h1>
-      <p>Email: EchoArcana@yahoo.com</p>
-      <p className="text-sm opacity-70 mt-2">A proper form will live here later.</p>
+    <main className="mx-auto max-w-xl p-6 space-y-6">
+      <h1 className="text-3xl font-extrabold">Join the Goblin Council</h1>
+      <p className="opacity-80">Receive secret prophecies, drops, and chaos. No spam—just goblins.</p>
+      <form className="space-y-3" method="post" action="/api/subscribe">
+        <input required name="email" type="email" placeholder="you@realm.com" className="w-full rounded-xl px-4 py-3 bg-black border" />
+        <button className="rounded-xl px-5 py-3 border shadow">Pledge my inbox</button>
+      </form>
+      <p className="text-xs opacity-60">We’ll wire this to Mailchimp or a webhook in Phase 1.5.</p>
     </main>
   );
 }
