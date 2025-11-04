@@ -2,9 +2,7 @@ export default function Page() {
   return (
     <main className="mx-auto max-w-6xl p-6 space-y-10">
       <section className="py-14">
-        <h1 className="text-4xl md:text-5xl font-extrabold">
-          Echo Arcana — Where magic gets weird
-        </h1>
+        <h1 className="text-4xl md:text-5xl font-extrabold">Echo Arcana — Where magic gets weird</h1>
         <p className="mt-4 text-lg opacity-80">
           Goblins, maps, spells, and a dash of chaos. Dive in, color something, or break reality (responsibly).
         </p>
