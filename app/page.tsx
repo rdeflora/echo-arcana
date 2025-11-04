@@ -1,3 +1,4 @@
+import CouncilBox from "./_components/council";
 import Hero from "./_components/hero";
 import FeaturesSection from "./_components/features";
 import Latest from "./_components/latest";
@@ -15,6 +16,15 @@ export default function Home() {
       <FeaturesSection />
       <Latest />
       <LinksPortal />
-    </main>
+      <div className="space-y-12"></div>
+</main>
   );
 }
+
+import GoblinsSection from "./_components/goblins";
+
+
+{/* ——— Meet the Goblins ——— */}
+<GoblinsSection />
+{/* ——— Council Signup ——— */}
+<CouncilBox />
