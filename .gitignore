@@ -5,3 +5,7 @@ npm-debug.log*
 yarn-error*
 pnpm-debug*
 .env*
+
+# local backups
+.checkpoints/
+*.tar.gz
