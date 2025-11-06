@@ -21,3 +21,7 @@ pnpm-debug*
 # local backups — never commit
 .checkpoints/
 *.tar.gz
+
+# local backups — never commit
+.checkpoints/
+*.tar.gz
