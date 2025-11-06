@@ -1,23 +1,26 @@
-export const metadata = { title: "Echo Arcana — Games" };
+import Link from "next/link";
 
-const cards = [
-  { href: "/games/potion-panic", title: "Potion Panic", blurb: "Mix fast or boom." },
-  { href: "/games/nibbler-snack-attack", title: "Nibbler’s Snack Attack", blurb: "Eat everything (except the right thing)." },
-  { href: "/games/grumples-greed", title: "Grumple’s Greed", blurb: "Grab gold. Avoid Redwina." },
-];
-
-export default function GamesPage() {
+export default function Games() {
+  const items = [
+    { href: "/games/potion-panic", title: "Potion Panic", blurb: "Mix fast or boom." },
+    { href: "/games/nibbler-snack-attack", title: "Nibbler’s Snack Attack", blurb: "Feed the mimic—wisely." },
+    { href: "/games/grumples-greed", title: "Grumple’s Greed", blurb: "Grab gold before Redwina spots you." },
+  ];
   return (
-    <main className="mx-auto max-w-6xl p-6 space-y-6">
-      <h1 className="text-3xl font-extrabold">Fun & Games</h1>
-      <p className="opacity-80">Tiny chaos now. Full playable mayhem soon.</p>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {cards.map(c => (
-          <a key={c.href} href={c.href} className="rounded-xl border shadow p-4 hover:scale-[1.01] transition">
-            <div className="text-lg font-bold">{c.title}</div>
-            <div className="text-sm opacity-80 mt-1">{c.blurb}</div>
-            <div className="text-xs mt-3 opacity-60">Prototype placeholder — Phaser/Godot build goes here later.</div>
-          </a>
+    <main className="mx-auto max-w-4xl p-6">
+      <h1 className="text-4xl font-bold mb-4">Echo Arcana — Games</h1>
+      <p className="opacity-80 mb-6">Tiny chaotic time-wasters from the Echo Realms.</p>
+      <div className="grid gap-4 sm:grid-cols-2">
+        {items.map((g) => (
+          <Link
+            key={g.href}
+            href={g.href}
+            className="rounded-2xl border border-white/20 bg-black/30 backdrop-blur p-5 hover:bg-black/40 transition"
+          >
+            <h2 className="text-2xl font-semibold">{g.title}</h2>
+            <p className="opacity-80">{g.blurb}</p>
+            <span className="inline-block mt-3 text-sm underline">Open</span>
+          </Link>
         ))}
       </div>
     </main>
