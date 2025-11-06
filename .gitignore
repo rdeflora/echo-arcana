@@ -9,3 +9,7 @@ pnpm-debug*
 # local backups
 .checkpoints/
 *.tar.gz
+
+# local backups
+.checkpoints/
+*.tar.gz
