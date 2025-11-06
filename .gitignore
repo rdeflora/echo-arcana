@@ -13,3 +13,7 @@ pnpm-debug*
 # local backups
 .checkpoints/
 *.tar.gz
+
+# local backups — never commit
+.checkpoints/
+*.tar.gz
